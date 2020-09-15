@@ -18,10 +18,10 @@
         <nav>
             <ul class="nav nav-pills mt-4" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="?food=1">Order food</a>
+                    <a class="nav-link<?php if ($_GET['food'] == 1) echo ' active'; ?>" id="pills-home-tab" data-toggle="pill" href="?food=1">Order food</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-home-tab" data-toggle="pill" href="?food=0">Order drinks</a>
+                    <a class="nav-link<?php if ($_GET['food'] == 0) echo ' active'; ?>" id="pills-home-tab" data-toggle="pill" href="?food=0">Order drinks</a>
                 </li>
             </ul>
         </nav>

@@ -175,7 +175,7 @@ function whatshappening()
 }
 // whatshappening();
 
-// Link to other page
+// Link to form page
 require 'form-view.php';
 
 
