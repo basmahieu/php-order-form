@@ -10,6 +10,7 @@
 </head>
 
 <body class="bg-light">
+
     <div class="container mt-4">
         <?php echo $result; ?>
 
