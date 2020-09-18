@@ -24,7 +24,6 @@ echo "<b>Zipcode: </b>" . $addZipcode . "<br />";
 
 
 // DATA FROM FORM + CHECK
-
 $emailErr = $streetErr = $streetNumberErr = $cityErr = $zipcodeErr = $productsErr = "";
 $email =  $street = $streetNumber = $city = $zipcode = $products = "";
 
@@ -34,10 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["email"])) {
         $emailErr = "Email is required";
     } else {
-
-        $email = test_input($_POST["email"]);
-
-
+        $email = checkInput($_POST["email"]);
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $emailErr = "Invalid email format";
         }
@@ -48,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $streetErr = "street is required";
     } else {
 
-        $street = test_input($_POST["street"]);
+        $street = checkInput($_POST["street"]);
 
         if (!preg_match("/^[a-zA-Z-' ]*$/", $street)) {
             $streetErr = "Only letters and white space allowed";
@@ -60,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $streetNumberErr = "streetnumber is required";
     } else {
 
-        $streetNumber = test_input($_POST["streetnumber"]);
+        $streetNumber = checkInput($_POST["streetnumber"]);
 
         if (!preg_match("/^[1-9][0-9]*$/", $streetNumber)) {
             $streetNumberErr = "Only numbers allowed";
@@ -72,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $cityErr = "city is required";
     } else {
 
-        $city = test_input($_POST["city"]);
+        $city = checkInput($_POST["city"]);
 
         if (!preg_match("/^[a-zA-Z-' ]*$/", $city)) {
             $cityErr = "Only letters allowed";
@@ -84,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $zipcodeErr = "zipcode is required";
     } else {
 
-        $zipcode = test_input($_POST["zipcode"]);
+        $zipcode = checkInput($_POST["zipcode"]);
 
         if (!preg_match("/^[1-9][0-9]*$/", $zipcode)) {
             $zipcodeErr = "Only numbers allowed";
@@ -92,10 +88,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-echo 'She\'s Fun';
-
-// TEST IF INPUT IS CORRECT
-function test_input($data)
+// CHECK DATAT INPUT
+function checkInput($data)
 {
     $data = trim($data);
     $data = stripslashes($data);
@@ -161,8 +155,22 @@ if (isset($_POST['submit'])) {
         echo "<div class=\"alert alert-warning\" role=\"alert\"> An error has occured, mail not sent! </div>";
     }
 }
+$deliveryTime = estimateDeliveryTime();
 
+$deliveryTime = "";
+// Delivery time
+function estimateDeliveryTime()
+{
+    $timeNow = date("H:i");
 
+    if (!empty($_POST["expressDelivery"])) {
+        $hourExpressDel = date('H:i', strtotime('+45 minutes', strtotime($timeNow)));
+        return "Your order will be delivered at " . $hourExpressDel . "</br>";
+    } else {
+        $hourNormalDel = date('H:i', strtotime('+2 hours', strtotime($timeNow)));
+        return "Your order will be delivered at " . $hourNormalDel . "</br>";
+    };
+}
 // CHECK WHATS HAPPENING
 function whatshappening()
 {
@@ -173,7 +181,7 @@ function whatshappening()
     echo '<h3>$_SESSION</h3>';
     var_dump($_SESSION);
 }
-// whatshappening();
+// whatIsHappening();
 
 // Link to form page
 require 'form-view.php';
